@@ -42,5 +42,6 @@ enum update_status
 #define VSYNC true
 #define TITLE "Super Awesome Game"
 #define KEN_MUSIC "ken.ogg"
+#define HONDA_MUSIC "honda.ogg"
 
 #endif //__GLOBALS_H__
