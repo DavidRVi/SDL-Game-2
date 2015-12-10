@@ -16,6 +16,7 @@ ModuleInput::ModuleInput() : Module(), mouse({0, 0}), mouse_motion({0,0})
 ModuleInput::~ModuleInput()
 {
 	RELEASE_ARRAY(keyboard);
+	//delete[] keyboard;
 }
 
 // Called before render is available
