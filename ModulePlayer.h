@@ -25,6 +25,8 @@ public:
 	Animation idle;
 	Animation backward;
 	Animation forward;
+
+	Animation hadoken;
 	iPoint position;
 
 private:

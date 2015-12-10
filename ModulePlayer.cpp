@@ -4,6 +4,7 @@
 #include "ModuleInput.h"
 #include "ModuleRender.h"
 #include "ModuleTextures.h"
+#include "ModuleParticles.h"
 #include "SDL/include/SDL.h"
 
 // Reference at https://www.youtube.com/watch?v=OEhmUuehGOA
@@ -37,6 +38,11 @@ ModulePlayer::ModulePlayer(bool start_enabled) : Module(start_enabled)
 	forward.frames.push_back({ 353, 129, 65, 90 });
 	forward.frames.push_back({ 432, 129, 65, 90 });
 	forward.speed = 0.1f;
+
+	// TODO 20: HADOKEN ANIMATION
+	hadoken.frames.push_back({ 493, 1563, 43, 32 });
+	hadoken.frames.push_back({ 550, 1565, 56, 28 });
+	hadoken.speed = 0.1f;
 }
 
 ModulePlayer::~ModulePlayer()
@@ -81,6 +87,19 @@ update_status ModulePlayer::Update()
 	{
 		position.x--;
 		current_state = BACKWARD;
+	}
+
+	// HADOKEN
+	if (App->input->GetKey(SDL_SCANCODE_R) == KEY_DOWN)
+	{
+		_ParticleData hadokenData;
+		hadokenData.tex = graphics;
+		hadokenData.position.x = position.x+ 20;
+		hadokenData.position.y = position.y - 80;
+		hadokenData.speed = fPoint(1, 0);
+		hadokenData.anim = hadoken;
+
+		App->particles->CreateParticle(hadokenData);
 	}
 
 		
