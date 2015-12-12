@@ -5,22 +5,31 @@
 class Module;
 struct SDL_Rect;
 
+enum colliderType { PLAYER = 0, ENEMY, WALL, ENEMYPARTICLE, PLAYERPARTICLE };
 class Collider {
 private:
 	SDL_Rect* size;
-	const Module* listener = nullptr;
+	Module* listener = nullptr;
+	colliderType type;
 
 public:
 
-	Collider(int x, int y, int w, int h, const Module* listener)
+	Collider(int x, int y, int w, int h, Module* listener, colliderType aType)
 	{
 		size = new SDL_Rect();
 		size->x = x;
 		size->y = y;
 		size->w = w;
 		size->h = h;
-
+		type = aType;
 		this->listener = listener;
+	}
+
+	Collider(SDL_Rect* rect, Module* listener, colliderType aType)
+	{
+		size = rect;
+		this->listener = listener;
+		type = aType;
 	}
 
 	~Collider() {
@@ -33,7 +42,7 @@ public:
 		return size;
 	}
 
-	const Module* GetListener() {
+	Module* GetListener() {
 		return listener;
 	}
 };

@@ -8,7 +8,7 @@ ModuleParticles::ModuleParticles()
 
 bool ModuleParticles::Start()
 {
-	LOG("Loading particles");
+	LOG("Starting particles");
 
 	return true;
 }

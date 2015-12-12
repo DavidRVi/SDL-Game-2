@@ -1,10 +1,35 @@
-﻿Compilación iniciada a las 11/12/2015 17:40:42.
+﻿Compilación iniciada a las 12/12/2015 13:41:03.
      1>Proyecto "D:\Master\Programacion\Progr 2D\SDL Game 2\SDL-Game-2\SDL Game.vcxproj" en el nodo 2 (Build destinos).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl- /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt ModuleParticles.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl- /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Application.cpp Main.cpp ModuleAudio.cpp ModuleFadeToBlack.cpp ModuleInput.cpp ModuleParticles.cpp ModulePlayer.cpp ModuleRender.cpp ModuleSceneHonda.cpp ModuleSceneKen.cpp ModuleTextures.cpp ModuleWindow.cpp Particle.cpp
+         Application.cpp
+     1>d:\master\programacion\progr 2d\sdl game 2\sdl-game-2\timer.h(9): warning C4244: '=' : conversión de 'Uint32' a 'float'; posible pérdida de datos
+         Generando código...
+     1>cl : Línea de comandos warning D9028: error de recompilación mínimo, revirtiendo a la compilación normal
+         Compilando...
+         Main.cpp
+         ModuleAudio.cpp
+         ModuleFadeToBlack.cpp
+         ModuleInput.cpp
          ModuleParticles.cpp
      1>d:\master\programacion\progr 2d\sdl game 2\sdl-game-2\timer.h(9): warning C4244: '=' : conversión de 'Uint32' a 'float'; posible pérdida de datos
      1>d:\master\programacion\progr 2d\sdl game 2\sdl-game-2\moduleparticles.cpp(27): warning C4244: 'argumento' : conversión de 'float' a 'int'; posible pérdida de datos
+         ModulePlayer.cpp
+     1>d:\master\programacion\progr 2d\sdl game 2\sdl-game-2\timer.h(9): warning C4244: '=' : conversión de 'Uint32' a 'float'; posible pérdida de datos
+     1>d:\master\programacion\progr 2d\sdl game 2\sdl-game-2\moduleplayer.cpp(97): warning C4244: '=' : conversión de 'int' a 'float'; posible pérdida de datos
+     1>d:\master\programacion\progr 2d\sdl game 2\sdl-game-2\moduleplayer.cpp(98): warning C4244: '=' : conversión de 'int' a 'float'; posible pérdida de datos
+         ModuleRender.cpp
+         ModuleSceneHonda.cpp
+         ModuleSceneKen.cpp
+     1>d:\master\programacion\progr 2d\sdl game 2\sdl-game-2\modulesceneken.cpp(64): warning C4244: '=' : conversión de 'Uint32' a 'float'; posible pérdida de datos
+     1>d:\master\programacion\progr 2d\sdl game 2\sdl-game-2\modulesceneken.cpp(90): warning C4244: 'inicializando' : conversión de 'Uint32' a 'float'; posible pérdida de datos
+     1>d:\master\programacion\progr 2d\sdl game 2\sdl-game-2\modulesceneken.cpp(94): warning C4244: '+=' : conversión de 'float' a 'int'; posible pérdida de datos
+     1>d:\master\programacion\progr 2d\sdl game 2\sdl-game-2\modulesceneken.cpp(116): warning C4244: '=' : conversión de 'Uint32' a 'float'; posible pérdida de datos
+         ModuleTextures.cpp
+         ModuleWindow.cpp
+         Particle.cpp
+     1>d:\master\programacion\progr 2d\sdl game 2\sdl-game-2\timer.h(9): warning C4244: '=' : conversión de 'Uint32' a 'float'; posible pérdida de datos
+         Generando código...
        Link:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"D:\Master\Programacion\Progr 2D\SDL Game 2\SDL-Game-2\Debug\SDL Game - Master 1.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"D:\Master\Programacion\Progr 2D\SDL Game 2\SDL-Game-2\Debug\SDL Game - Master 1.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:\Master\Programacion\Progr 2D\SDL Game 2\SDL-Game-2\Debug\SDL Game - Master 1.lib" /MACHINE:X86 Debug\Application.obj
          Debug\Log.obj
@@ -25,4 +50,4 @@
 
 Compilación correcta.
 
-Tiempo transcurrido 00:00:01.09
+Tiempo transcurrido 00:00:05.70
