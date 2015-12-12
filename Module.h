@@ -2,6 +2,8 @@
 #define __MODULE_H__
 #include "Globals.h"
 
+class Collider;
+
 class Application;
 
 class Module
@@ -65,7 +67,7 @@ public:
 		return true; 
 	}
 
-//	virtual void OnCollision(Collider* a, Collider* b){ };
+	virtual void OnCollision(Collider* a, Collider* b){ };
 
 private:
 	bool active = true;
