@@ -116,3 +116,16 @@ bool ModuleRender::Blit(SDL_Texture* texture, int x, int y, SDL_Rect* section, f
 
 	return ret;
 }
+
+void ModuleRender::DrawRectangle(SDL_Rect* rect) {
+	SDL_Rect dstrect;
+	dstrect.x = rect->x * SCREEN_SIZE + (camera.x);
+	dstrect.y = rect->y * SCREEN_SIZE + (camera.y);
+	dstrect.w = rect->w;
+	dstrect.h = rect->h;
+
+	dstrect.w *= SCREEN_SIZE;
+	dstrect.h *= SCREEN_SIZE;
+
+	SDL_RenderFillRect(App->renderer->renderer, &dstrect);
+}

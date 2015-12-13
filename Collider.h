@@ -45,6 +45,10 @@ public:
 	Module* GetListener() {
 		return listener;
 	}
+
+	colliderType getType() {
+		return type;
+	}
 };
 
 #endif

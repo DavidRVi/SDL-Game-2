@@ -9,6 +9,7 @@
 #include "ModulePlayer.h"
 #include "ModuleSceneHonda.h"
 #include "ModuleParticles.h"
+#include "ModuleCollisions.h"
 
 using namespace std;
 
@@ -30,6 +31,9 @@ Application::Application()
 
 	// Particle module
 	modules.push_back(particles = new ModuleParticles());
+
+	// Collisions module
+	modules.push_back(collisions = new ModuleCollisions());
 }
 
 Application::~Application()

@@ -6,6 +6,7 @@
 #include "ModuleTextures.h"
 #include "ModuleParticles.h"
 #include "SDL/include/SDL.h"
+#include "ModuleCollisions.h"
 
 // Reference at https://www.youtube.com/watch?v=OEhmUuehGOA
 ModulePlayer::ModulePlayer(bool start_enabled) : Module(start_enabled)
@@ -100,6 +101,9 @@ update_status ModulePlayer::Update()
 		hadokenData.anim = hadoken;
 
 		App->particles->CreateParticle(hadokenData);
+
+		Collider* hadokenCol = new Collider(hadokenData.position.x, hadokenData.position.y, 50, 30, this, PLAYERPARTICLE);
+		App->collisions->AddCollider(hadokenCol);
 	}
 
 		
