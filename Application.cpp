@@ -26,14 +26,16 @@ Application::Application()
 	// Game Modules
 	modules.push_back(scene_ken = new ModuleSceneKen(false));
 	modules.push_back(scene_honda = new ModuleSceneHonda(false));
+
 	modules.push_back(player = new ModulePlayer(false));
 	modules.push_back(fade = new ModuleFadeToBlack());
 
 	// Particle module
 	modules.push_back(particles = new ModuleParticles());
 
-	// Collisions module
 	modules.push_back(collisions = new ModuleCollisions());
+
+
 }
 
 Application::~Application()

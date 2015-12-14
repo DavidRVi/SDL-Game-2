@@ -8,6 +8,7 @@
 #include "ModuleAudio.h"
 #include "ModuleFadeToBlack.h"
 #include "SDL/include/SDL.h"
+#include "Collider.h"
 
 // Reference at https://www.youtube.com/watch?v=OEhmUuehGOA
 
@@ -64,6 +65,14 @@ bool ModuleSceneKen::Start()
 	t_ship = SDL_GetTicks();
 	ship_state = false;
 	ship_offset = 0;
+
+	// Scene colliders
+	ground_wall = new Collider(&ground, this, WALL);
+	left_wall = new Collider(ground.x, ground.y, 10, 300, this, WALL);
+	right_wall = new Collider(ground.x + ground.w, ground.y, 10, 300, this, WALL);
+	App->collisions->AddCollider(ground_wall);
+	App->collisions->AddCollider(left_wall);
+	App->collisions->AddCollider(right_wall);
 	return true;
 }
 

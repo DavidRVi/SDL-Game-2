@@ -19,7 +19,7 @@ public:
 	update_status PostUpdate();
 	bool CleanUp();
 
-	void CreateParticle(_ParticleData particleData);
+	void CreateParticle(_ParticleData particleData, Collider* particleCol);
 
 
 private:

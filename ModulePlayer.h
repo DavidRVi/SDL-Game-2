@@ -7,6 +7,8 @@
 #include "Point.h"
 
 struct SDL_Texture;
+class Collider;
+
 enum state { IDLE, FORWARD, BACKWARD };
 class ModulePlayer : public Module
 {
@@ -31,6 +33,7 @@ public:
 
 private:
 	state current_state;
+	Collider* playerCol;
 };
 
 #endif // __MODULEPLAYER_H__

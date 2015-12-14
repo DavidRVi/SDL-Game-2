@@ -6,6 +6,7 @@
 #include "Globals.h"
 
 struct SDL_Texture;
+class Collider;
 
 class ModuleSceneKen : public Module
 {
@@ -30,6 +31,10 @@ private:
 	float t_ship;
 	bool ship_state;
 	float ship_offset;
+
+	Collider* ground_wall;
+	Collider* left_wall;
+	Collider* right_wall;
 };
 
 #endif // __MODULESCENEKEN_H__

@@ -1,7 +1,8 @@
 #include "Particle.h"
 #include "Application.h"
+#include "Collider.h"
 
-Particle::Particle(_ParticleData data, float limit)
+Particle::Particle(_ParticleData data, Collider* aCol, float limit)
 {
 	pos = data.position;
 	anim = data.anim;
@@ -9,12 +10,14 @@ Particle::Particle(_ParticleData data, float limit)
 	speed = data.speed;
 	lifeTime = new Timer(limit);
 	_isDirty = false;
+
+	particleCol = aCol;
 }
 
 
 Particle::~Particle()
 {
-	delete lifeTime;
+	//CleanUp();
 }
 
 fPoint Particle::getPos()
@@ -25,8 +28,13 @@ fPoint Particle::getPos()
 void Particle::Update()
 {
 	if (lifeTime->hasPassed())
+	{
 		_isDirty = true;
+		particleCol->SetDirty(true);
+	}
+
 	pos += speed;
+	particleCol->SetPosition(pos.x, pos.y);
 }
 
 Animation Particle::getAnimation() {
@@ -43,4 +51,10 @@ SDL_Rect& Particle::GetCurrentFrame() {
 
 bool Particle::isDirty() {
 	return _isDirty;
+}
+
+void Particle::CleanUp() {
+	RELEASE(lifeTime);
+	//particleCol->SetDirty(true);
+	//particleCol = nullptr;
 }

@@ -2,6 +2,8 @@
 #define _COLLIDER_H_
 
 #include "SDL/include/SDL.h"
+#include "ModuleCollisions.h"
+
 class Module;
 struct SDL_Rect;
 
@@ -11,6 +13,7 @@ private:
 	SDL_Rect* size;
 	Module* listener = nullptr;
 	colliderType type;
+	bool _isDirty;
 
 public:
 
@@ -22,6 +25,7 @@ public:
 		size->w = w;
 		size->h = h;
 		type = aType;
+		_isDirty = false;
 		this->listener = listener;
 	}
 
@@ -33,9 +37,7 @@ public:
 	}
 
 	~Collider() {
-		delete size;
-		size = nullptr;
-		listener = nullptr;
+		CleanUp();
 	}
 
 	SDL_Rect* GetRect(){
@@ -48,6 +50,28 @@ public:
 
 	colliderType getType() {
 		return type;
+	}
+
+	void SetPosition(int x, int y)
+	{
+		size->x = x;
+		size->y = y;
+	}
+
+	void CleanUp() {
+		if (size != nullptr)
+			delete size;
+		size = nullptr;
+		listener = nullptr;
+		_isDirty = true;
+	}
+
+	bool isDirty() {
+		return _isDirty;
+	}
+
+	void SetDirty(bool value) {
+		_isDirty = value;
 	}
 };
 

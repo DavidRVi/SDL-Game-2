@@ -58,6 +58,8 @@ bool ModulePlayer::Start()
 
 	graphics = App->textures->Load("ryu4.png"); // arcade version
 	current_state = IDLE;
+	playerCol = new Collider(position.x, position.y - 100, 60, 90, this, PLAYER);
+	App->collisions->AddCollider(playerCol);
 	return true;
 }
 
@@ -65,7 +67,8 @@ bool ModulePlayer::Start()
 bool ModulePlayer::CleanUp()
 {
 	LOG("Unloading player");
-
+	//playerCol->CleanUp();
+	//playerCol = nullptr;
 	App->textures->Unload(graphics);
 
 	return true;
@@ -100,13 +103,15 @@ update_status ModulePlayer::Update()
 		hadokenData.speed = fPoint(1, 0);
 		hadokenData.anim = hadoken;
 
-		App->particles->CreateParticle(hadokenData);
-
 		Collider* hadokenCol = new Collider(hadokenData.position.x, hadokenData.position.y, 50, 30, this, PLAYERPARTICLE);
+		App->particles->CreateParticle(hadokenData, hadokenCol);
+
 		App->collisions->AddCollider(hadokenCol);
 	}
 
-		
+	playerCol->SetPosition(position.x, position.y - 100);
+
+
 	switch (current_state)
 	{
 	case IDLE:

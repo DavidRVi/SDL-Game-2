@@ -16,6 +16,7 @@ void ModuleCollisions::AddCollider(Collider* col) {
 bool ModuleCollisions::CleanUp() {
 	for (ColliderList::iterator it = colliderList.begin(); it != colliderList.end(); ++it)
 	{
+		it->first->CleanUp();
 		delete it->first;
 	}
 	colliderList.clear();
@@ -66,8 +67,9 @@ update_status ModuleCollisions::Update() {
 update_status ModuleCollisions::PostUpdate() {
 	ColliderList::iterator it = colliderList.begin();
 	while (it != colliderList.end()) {
-		if (it->second)
+		if (it->second || it->first->isDirty())
 		{
+			it->first->CleanUp();
 			delete it->first;
 			colliderList.erase(it++);
 		}
