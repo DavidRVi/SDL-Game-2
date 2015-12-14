@@ -7,6 +7,7 @@
 #include "ModuleInput.h"
 #include "ModuleAudio.h"
 #include "ModuleFadeToBlack.h"
+#include "ModuleCollisions.h"
 #include "SDL/include/SDL.h"
 #include "Collider.h"
 
@@ -67,9 +68,10 @@ bool ModuleSceneKen::Start()
 	ship_offset = 0;
 
 	// Scene colliders
-	ground_wall = new Collider(&ground, this, WALL);
-	left_wall = new Collider(ground.x, ground.y, 10, 300, this, WALL);
-	right_wall = new Collider(ground.x + ground.w, ground.y, 10, 300, this, WALL);
+	ground_wall = new Collider(0, 210, 890, 20, this, WALL);
+	left_wall = new Collider(0, 250, 10, -250, this, WALL);
+	right_wall = new Collider(890, 250, 10, -250, this, WALL);
+
 	App->collisions->AddCollider(ground_wall);
 	App->collisions->AddCollider(left_wall);
 	App->collisions->AddCollider(right_wall);

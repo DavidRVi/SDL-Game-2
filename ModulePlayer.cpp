@@ -74,23 +74,29 @@ bool ModulePlayer::CleanUp()
 	return true;
 }
 
-// Update
-update_status ModulePlayer::Update()
-{
-	// TODO 9: Draw the player with its animation
-	// make sure to detect player movement and change its
-	// position while cycling the animation(check Animation.h)
+update_status ModulePlayer::PreUpdate() {
 	current_state = IDLE;
-	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
+	if (current_state == IDLE)
 	{
-		position.x++;
-		current_state = FORWARD;
-	}
+		if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
+		{
+			//position.x++;
+			current_state = FORWARD;
+		}
 
-	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
-	{
-		position.x--;
-		current_state = BACKWARD;
+		if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
+		{
+			//position.x--;
+			current_state = BACKWARD;
+		}
+	}
+	else if (current_state == FORWARD) {
+		if (App->input->GetKey(SDL_SCANCODE_D) == KEY_UP)
+			current_state = IDLE;
+	}
+	else if (current_state == BACKWARD) {
+		if (App->input->GetKey(SDL_SCANCODE_A) == KEY_UP)
+			current_state = IDLE;
 	}
 
 	// HADOKEN
@@ -98,9 +104,9 @@ update_status ModulePlayer::Update()
 	{
 		_ParticleData hadokenData;
 		hadokenData.tex = graphics;
-		hadokenData.position.x = position.x+ 20;
+		hadokenData.position.x = position.x + 50;
 		hadokenData.position.y = position.y - 80;
-		hadokenData.speed = fPoint(1, 0);
+		hadokenData.speed = fPoint(1.5, 0);
 		hadokenData.anim = hadoken;
 
 		Collider* hadokenCol = new Collider(hadokenData.position.x, hadokenData.position.y, 50, 30, this, PLAYERPARTICLE);
@@ -112,18 +118,58 @@ update_status ModulePlayer::Update()
 	playerCol->SetPosition(position.x, position.y - 100);
 
 
+	return UPDATE_CONTINUE;
+}
+// Update
+update_status ModulePlayer::Update()
+{
+	// TODO 9: Draw the player with its animation
+	// make sure to detect player movement and change its
+	// position while cycling the animation(check Animation.h)
+	
 	switch (current_state)
 	{
 	case IDLE:
 		App->renderer->Blit(graphics, position.x, position.y-100, &idle.GetCurrentFrame());
 		break;
 	case FORWARD:
+		position.x++;
 		App->renderer->Blit(graphics, position.x, position.y-100, &forward.GetCurrentFrame());
 		break;
 	case BACKWARD:
+		position.x--;
 		App->renderer->Blit(graphics, position.x, position.y-100, &backward.GetCurrentFrame());
+		break;
+	case FORWARD_WALL:
+		App->renderer->Blit(graphics, position.x, position.y - 100, &forward.GetCurrentFrame());
+		break;
+	case BACKWARD_WALL:
+		App->renderer->Blit(graphics, position.x, position.y - 100, &backward.GetCurrentFrame());
 		break;
 	}
 
 	return UPDATE_CONTINUE;
+}
+
+
+update_status ModulePlayer::PostUpdate() {
+	return UPDATE_CONTINUE;
+}
+
+bool ModulePlayer::OnCollision(Collider* a, Collider* b)
+{
+
+	if (a->getType() == PLAYER)
+	{
+		if (b->getType() == WALL)
+		{
+			if (current_state == FORWARD)
+				current_state = FORWARD_WALL;
+			else if (current_state == BACKWARD)
+				current_state = BACKWARD_WALL;
+			//LOG("COLLISIOON");
+		}
+	}
+
+	return false;
 }

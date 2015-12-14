@@ -9,7 +9,7 @@
 struct SDL_Texture;
 class Collider;
 
-enum state { IDLE, FORWARD, BACKWARD };
+enum state { IDLE, FORWARD, FORWARD_WALL, BACKWARD, BACKWARD_WALL };
 class ModulePlayer : public Module
 {
 public:
@@ -17,8 +17,11 @@ public:
 	~ModulePlayer();
 
 	bool Start();
+	update_status PreUpdate();
 	update_status Update();
+	update_status PostUpdate();
 	bool CleanUp();
+	bool OnCollision(Collider* a, Collider* b);
 
 
 public:
