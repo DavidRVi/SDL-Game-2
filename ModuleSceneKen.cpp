@@ -68,11 +68,11 @@ bool ModuleSceneKen::Start()
 	ship_offset = 0;
 
 	// Scene colliders
-	ground_wall = new Collider(0, 210, 890, 20, this, WALL);
-	left_wall = new Collider(0, 250, 10, -250, this, WALL);
-	right_wall = new Collider(890, 250, 10, -250, this, WALL);
+	//ground_wall = new Collider(0, 210, 890, 20, this, WALL);
+	left_wall = new Collider(0, 0, 10, 250, this, WALL);
+	right_wall = new Collider(890, 0, 10, 250, this, WALL);
 
-	App->collisions->AddCollider(ground_wall);
+	//App->collisions->AddCollider(ground_wall);
 	App->collisions->AddCollider(left_wall);
 	App->collisions->AddCollider(right_wall);
 	return true;

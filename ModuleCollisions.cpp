@@ -32,12 +32,25 @@ update_status ModuleCollisions::PreUpdate() {
 		{
 			for (; jt != it; --jt)
 			{
+				
 				if (DetectCollision(it->first, jt->first))
 				{
 					//LOG("COLLISIOOON")
 					it->second = it->first->GetListener()->OnCollision(it->first, jt->first);
 					jt->second = jt->first->GetListener()->OnCollision(jt->first, it->first);
 				}
+
+				/*
+				if (it->first->getType() == PLAYER)
+				{
+					if ( jt->first->getType() == WALL)
+					{
+						if (SDL_HasIntersection(it->first->GetRect(), jt->first->GetRect()))
+						{
+							LOG("COLLISIOOON");
+						}
+					}
+				}*/
 			}
 			jt = colliderList.end();
 			--jt;
@@ -61,6 +74,7 @@ update_status ModuleCollisions::Update() {
 				SDL_SetRenderDrawColor(App->renderer->renderer, 0, 255, 0, 100);
 			else if (it->first->getType() == PLAYERPARTICLE)
 				SDL_SetRenderDrawColor(App->renderer->renderer, 0, 0, 255, 100);
+
 			App->renderer->DrawRectangle(it->first->GetRect());
 		}
 			
@@ -93,10 +107,11 @@ bool ModuleCollisions::DetectCollision(Collider* a, Collider* b) {
 	bool _hasCollided = false;
 	if (a->getType() != b->getType())
 	{
-		if (a->getType() == PLAYERPARTICLE || b->getType() == PLAYERPARTICLE)
+		if (a->getType() == PLAYERPARTICLE || a->getType() == PLAYER)
 		{
-			if (a->getType() == PLAYER || b->getType() == PLAYER)
+			if (b->getType() == PLAYERPARTICLE || b->getType() == PLAYER)
 				_hasCollided = false;
+			else _hasCollided = SDL_HasIntersection(a->GetRect(), b->GetRect());
 		}
 		else
 			_hasCollided = SDL_HasIntersection(a->GetRect(), b->GetRect());

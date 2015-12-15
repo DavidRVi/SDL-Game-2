@@ -115,7 +115,7 @@ update_status ModulePlayer::PreUpdate() {
 		App->collisions->AddCollider(hadokenCol);
 	}
 
-	playerCol->SetPosition(position.x, position.y - 100);
+
 
 
 	return UPDATE_CONTINUE;
@@ -148,6 +148,8 @@ update_status ModulePlayer::Update()
 		break;
 	}
 
+	playerCol->SetPosition(position.x, position.y - 100);
+
 	return UPDATE_CONTINUE;
 }
 
@@ -158,17 +160,20 @@ update_status ModulePlayer::PostUpdate() {
 
 bool ModulePlayer::OnCollision(Collider* a, Collider* b)
 {
-
-	if (a->getType() == PLAYER)
+	if (b->getType() == WALL)
 	{
-		if (b->getType() == WALL)
+		if (current_state == FORWARD)
 		{
-			if (current_state == FORWARD)
+			if (b->GetRect()->x >= position.x)
 				current_state = FORWARD_WALL;
-			else if (current_state == BACKWARD)
+		}			
+		else if (current_state == BACKWARD)
+		{
+			if (b->GetRect()->x <= position.x)
 				current_state = BACKWARD_WALL;
-			//LOG("COLLISIOON");
 		}
+
+		//LOG("COLLISIOON");
 	}
 
 	return false;

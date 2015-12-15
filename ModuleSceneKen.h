@@ -33,7 +33,6 @@ private:
 	bool ship_state;
 	float ship_offset;
 
-	Collider* ground_wall;
 	Collider* left_wall;
 	Collider* right_wall;
 };
