@@ -10,7 +10,7 @@ ModuleCollisions::~ModuleCollisions() {
 }
 
 void ModuleCollisions::AddCollider(Collider* col) {
-	colliderList.push_back(pair <Collider*, bool>(col, false));
+	colliderList.push_back(pair <Collider*, Collision_status>(col, OUT));
 }
 
 bool ModuleCollisions::CleanUp() {
@@ -35,22 +35,48 @@ update_status ModuleCollisions::PreUpdate() {
 				
 				if (DetectCollision(it->first, jt->first))
 				{
-					//LOG("COLLISIOOON")
-					it->second = it->first->GetListener()->OnCollision(it->first, jt->first);
-					jt->second = jt->first->GetListener()->OnCollision(jt->first, it->first);
+					switch (it->second)
+					{
+					case OUT:
+						it->first->GetListener()->OnCollisionEnter(it->first, jt->first);
+						jt->first->GetListener()->OnCollisionEnter(jt->first, it->first);
+						it->second = ENTER;
+						break;
+					case STAY:
+						it->first->GetListener()->OnCollisionStay(it->first, jt->first);
+						jt->first->GetListener()->OnCollisionStay(jt->first, it->first);
+						break;
+					case ENTER:
+						it->first->GetListener()->OnCollisionStay(it->first, jt->first);
+						jt->first->GetListener()->OnCollisionStay(jt->first, it->first);
+						it->second = STAY;
+						break;
+					case EXIT:
+						it->first->GetListener()->OnCollisionEnter(it->first, jt->first);
+						jt->first->GetListener()->OnCollisionEnter(jt->first, it->first);
+						it->second = STAY;
+						break;
+					}
+				}
+				else {
+					switch (it->second)
+					{
+					case ENTER:
+						it->first->GetListener()->OnCollisionExit(it->first, jt->first);
+						jt->first->GetListener()->OnCollisionExit(jt->first, it->first);
+						it->second = EXIT;
+						break;
+					case STAY:
+						it->first->GetListener()->OnCollisionExit(it->first, jt->first);
+						jt->first->GetListener()->OnCollisionExit(jt->first, it->first);
+						it->second = EXIT;
+						break;
+					case EXIT:
+						it->second = OUT;
+						break;
+					}
 				}
 
-				/*
-				if (it->first->getType() == PLAYER)
-				{
-					if ( jt->first->getType() == WALL)
-					{
-						if (SDL_HasIntersection(it->first->GetRect(), jt->first->GetRect()))
-						{
-							LOG("COLLISIOOON");
-						}
-					}
-				}*/
 			}
 			jt = colliderList.end();
 			--jt;
@@ -74,6 +100,8 @@ update_status ModuleCollisions::Update() {
 				SDL_SetRenderDrawColor(App->renderer->renderer, 0, 255, 0, 100);
 			else if (it->first->getType() == PLAYERPARTICLE)
 				SDL_SetRenderDrawColor(App->renderer->renderer, 0, 0, 255, 100);
+			else if (it->first->getType() == ENEMY)
+				SDL_SetRenderDrawColor(App->renderer->renderer, 255, 0, 0, 100);
 
 			App->renderer->DrawRectangle(it->first->GetRect());
 		}
@@ -91,7 +119,7 @@ update_status ModuleCollisions::Update() {
 update_status ModuleCollisions::PostUpdate() {
 	ColliderList::iterator it = colliderList.begin();
 	while (it != colliderList.end()) {
-		if (it->second || it->first->isDirty())
+		if (it->first->isDirty())
 		{
 			it->first->CleanUp();
 			delete it->first;
@@ -101,6 +129,7 @@ update_status ModuleCollisions::PostUpdate() {
 	}
 
 	return UPDATE_CONTINUE;
+
 }
 
 bool ModuleCollisions::DetectCollision(Collider* a, Collider* b) {

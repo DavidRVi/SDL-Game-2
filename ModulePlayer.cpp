@@ -44,6 +44,8 @@ ModulePlayer::ModulePlayer(bool start_enabled) : Module(start_enabled)
 	hadoken.frames.push_back({ 493, 1563, 43, 32 });
 	hadoken.frames.push_back({ 550, 1565, 56, 28 });
 	hadoken.speed = 0.1f;
+
+	playerCol = nullptr;
 }
 
 ModulePlayer::~ModulePlayer()
@@ -115,9 +117,6 @@ update_status ModulePlayer::PreUpdate() {
 		App->collisions->AddCollider(hadokenCol);
 	}
 
-
-
-
 	return UPDATE_CONTINUE;
 }
 // Update
@@ -158,15 +157,21 @@ update_status ModulePlayer::PostUpdate() {
 	return UPDATE_CONTINUE;
 }
 
-bool ModulePlayer::OnCollision(Collider* a, Collider* b)
+bool ModulePlayer::OnCollisionEnter(Collider* a, Collider* b)
 {
+	if (b->getType() == WALL)
+		LOG("ASDSA");
+	return false;
+}
+
+bool ModulePlayer::OnCollisionStay(Collider* a, Collider* b) { 
 	if (b->getType() == WALL)
 	{
 		if (current_state == FORWARD)
 		{
 			if (b->GetRect()->x >= position.x)
 				current_state = FORWARD_WALL;
-		}			
+		}
 		else if (current_state == BACKWARD)
 		{
 			if (b->GetRect()->x <= position.x)
@@ -176,5 +181,26 @@ bool ModulePlayer::OnCollision(Collider* a, Collider* b)
 		//LOG("COLLISIOON");
 	}
 
+	return false;
+}
+
+bool ModulePlayer::OnCollisionExit(Collider* a, Collider* b)
+{
+
+	if (b->getType() == WALL)
+		LOG("ASDASD");
+	/*
+	_ParticleData hadokenData;
+	hadokenData.tex = graphics;
+	hadokenData.position.x = position.x + 50;
+	hadokenData.position.y = position.y - 80;
+	hadokenData.speed = fPoint(1.5, 0);
+	hadokenData.anim = hadoken;
+
+	Collider* hadokenCol = new Collider(hadokenData.position.x, hadokenData.position.y, 50, 30, this, PLAYERPARTICLE);
+	App->particles->CreateParticle(hadokenData, hadokenCol);
+
+	App->collisions->AddCollider(hadokenCol);
+	*/
 	return false;
 }

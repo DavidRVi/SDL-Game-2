@@ -9,8 +9,10 @@
 #include "ModuleInput.h"
 #include "ModuleRender.h"
 
-typedef std::list<pair<Collider*, bool>> ColliderList;
 
+enum Collision_status {ENTER = 0, STAY, EXIT, OUT };
+
+typedef std::list<pair<Collider*, Collision_status>> ColliderList;
 class ModuleCollisions : public Module {
 public:
 	ModuleCollisions(bool start_enabled = true);

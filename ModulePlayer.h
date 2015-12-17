@@ -21,7 +21,9 @@ public:
 	update_status Update();
 	update_status PostUpdate();
 	bool CleanUp();
-	bool OnCollision(Collider* a, Collider* b);
+	bool OnCollisionEnter(Collider* a, Collider* b);
+	bool OnCollisionStay(Collider* a, Collider* b);
+	bool OnCollisionExit(Collider* a, Collider* b);
 
 
 public:

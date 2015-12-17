@@ -67,7 +67,9 @@ public:
 		return true; 
 	}
 
-	virtual bool OnCollision(Collider* a, Collider* b){ return false; };		//Returns true if a needs to be deleted
+	virtual bool OnCollisionEnter(Collider* a, Collider* b){ return false; };		//Returns true if a needs to be deleted
+	virtual bool OnCollisionStay(Collider* a, Collider* b) { return false; };
+	virtual bool OnCollisionExit(Collider* a, Collider* b) { return false; };
 
 private:
 	bool active = true;

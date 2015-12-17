@@ -5,12 +5,13 @@
 #include "ModuleCollisions.h"
 
 class Module;
+
 struct SDL_Rect;
 
 enum colliderType { PLAYER = 0, ENEMY, WALL, ENEMYPARTICLE, PLAYERPARTICLE };
 class Collider {
 private:
-	SDL_Rect* size;
+	SDL_Rect* size = nullptr;
 	Module* listener = nullptr;
 	colliderType type;
 	bool _isDirty;
